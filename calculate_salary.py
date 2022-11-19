@@ -1,18 +1,14 @@
+from validate import ValidateHour
 from datetime import datetime
 import json
 
 
 class CalculateSalaryEmploye:
+    validate = ValidateHour()
 
-    def validate_hour(self, hour):
-        hour = str(hour)        
-        if int(hour[0:2]) >= 24:
-            return False
-        return True
-
-    def format_hour(self, hour):        
-        
-        if not self.validate_hour(hour):
+    def format_hour(self, hour):
+        validate = self.validate
+        if not validate.validate_hour(hour) or not validate.validate_number(hour):
             return False
         
         return datetime.strptime(hour, "%H:%M").time()
@@ -23,7 +19,6 @@ class CalculateSalaryEmploye:
     def calculate_hours(self, day, hour_start, hour_end):
         hour_start = self.format_hour(hour_start)
         hour_end = self.format_hour(hour_end)
-        # import pdb; pdb.set_trace()
         if not hour_start or not hour_end:
             return json.dumps({'error': 'hour invalid'})
 
@@ -49,7 +44,7 @@ class CalculateSalaryEmploye:
         if hour_start >= self.format_hour("18:01"):
             return self.calculate_time(num1, num2)*values['c']
 
-    def calculate_salary(self, data):        
+    def calculate_salary(self, data):
         sum_salary = []
         for k, v in data.items():
             sum_salary.append(self.calculate_hours(k, v[0], v[1]))

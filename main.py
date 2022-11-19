@@ -15,7 +15,7 @@ class EmployeesAcme:
         return data
     
     def salary_employes(self):
-        set_data = self.get_data()        
+        set_data = self.get_data()
         for data in set_data:
             name = data['name']
             data.pop('name')
