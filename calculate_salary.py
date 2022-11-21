@@ -13,14 +13,14 @@ class CalculateSalaryEmploye:
         
         return datetime.strptime(hour, "%H:%M").time()
 
-    def calculate_time(self, hour_end, hour_start):
-        return int(hour_start)-int(hour_end)
+    def calculate_time(self, end_hour, start_hour):
+        return int(start_hour)-int(end_hour)
     
-    def calculate_hours(self, day, hour_start, hour_end):
-        hour_start = self.format_hour(hour_start)
-        hour_end = self.format_hour(hour_end)
-        if not hour_start or not hour_end:
-            return json.dumps({'error': 'hour invalid'})
+    def calculate_value_hours(self, day, start_hour, end_hour):
+        start_hour = self.format_hour(start_hour)
+        end_hour = self.format_hour(end_hour)
+        if not start_hour or not end_hour:
+            return json.dumps({'error': 'Invalid hour'})
 
         week_days = ['MO', 'TU', 'WE', 'TH', 'FR']
         weekend_days = ['SA', 'SU']
@@ -34,18 +34,19 @@ class CalculateSalaryEmploye:
             values['b'] = 20
             values['c'] = 25
         
-        num1 = str(hour_start)[0:2]
-        num2 = str(hour_end)[0:2]
+        num1 = str(start_hour)[0:2]
+        num2 = str(end_hour)[0:2]
         
-        if hour_start >= self.format_hour("00:01") and hour_end <= self.format_hour("09:00"):
+        if start_hour >= self.format_hour("00:01") and end_hour <= self.format_hour("09:00"):
             return self.calculate_time(num1, num2)*values['a']
-        if hour_start >= self.format_hour("09:01") and hour_end <= self.format_hour("18:00"):
+        if start_hour >= self.format_hour("09:01") and end_hour <= self.format_hour("18:00"):
             return self.calculate_time(num1, num2)*values['b']
-        if hour_start >= self.format_hour("18:01"):
+        if start_hour >= self.format_hour("18:01"):
             return self.calculate_time(num1, num2)*values['c']
 
     def calculate_salary(self, data):
+        """ Take a dict with day and theirs hours, returns sum of values, total salary """
         sum_salary = []
         for k, v in data.items():
-            sum_salary.append(self.calculate_hours(k, v[0], v[1]))
+            sum_salary.append(self.calculate_value_hours(k, v[0], v[1]))
         return sum(sum_salary)

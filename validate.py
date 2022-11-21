@@ -1,4 +1,5 @@
 class ValidateHour:
+    """Class alidate hour, just allows numbers or in corrcets time ranges"""
 
     def validate_number(self, num):
         num1 = num[0:2]

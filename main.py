@@ -5,18 +5,15 @@ from calculate_salary import CalculateSalaryEmploye
 
 class EmployeesAcme:
 
-    read = ReadFiles("employes.txt").read_files()
-
-    def get_data(self):
+    def get_data(self, content):
         data = []
-        for i in self.read:
+        for i in content:
             manage = ManageContent(i)
             data.append(manage.get_turns_employe())
         return data
     
-    def salary_employes(self):
-        set_data = self.get_data()
-        for data in set_data:
+    def salary_employes(self, data):
+        for data in data:
             name = data['name']
             data.pop('name')
             salary = CalculateSalaryEmploye().calculate_salary(data)
@@ -24,4 +21,7 @@ class EmployeesAcme:
 
 
 if __name__ == '__main__':
-    EmployeesAcme().salary_employes()
+    name_file = "employes.txt"
+    read = ReadFiles(name_file).read_files()
+    data = EmployeesAcme().get_data(read)
+    EmployeesAcme().salary_employes(data)
