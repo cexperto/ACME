@@ -1,4 +1,7 @@
 class ManageContent:
+    """ Class content functions to get info from str with above structure:
+        RENE=MO10:00-12:00,TU10:00-12:00,TH01:00-03:00,SA14:00-18:00,SU20:00-21:00
+     """
 
     def __init__(self, data):
         self.data = data

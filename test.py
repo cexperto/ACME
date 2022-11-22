@@ -12,17 +12,17 @@ from main import EmployeesAcme
 
 class TestReadFiles(unittest.TestCase):
     
-    mock_file_content = """RENE=MO10:00-12:00,TU10:00-12:00,TH01:00-03:00,SA14:00-18:00,SU20:00-21:00"""
+    mock_file_content = """RENE=MO10:00-12:00"""
     
     def test_read_files(self):
         with unittest.mock.patch(
                 'builtins.open',
                 new=unittest.mock.mock_open(read_data=self.mock_file_content),
                 create=True
-        ) as _:
-            # import pdb; pdb.set_trace()
-            self.assertEqual(ReadFiles('/').read_files(), [self.mock_file_content])
-            self.assertEqual(type(ReadFiles('/').read_files()), list)
+        ) as _:            
+            expected = '{"error": "The file should with at least five sets of data"}'
+            self.assertEqual(ReadFiles('/').read_files(), expected)
+            self.assertEqual(type(ReadFiles('/').read_files()), str)
 
 
 class TestManageContent(unittest.TestCase):
@@ -44,7 +44,6 @@ class TestCalculateSalary(unittest.TestCase):
     calculate_salary = CalculateSalaryEmploye()
 
     def test_format_hour(self):
-        # import pdb; pdb.set_trace()
         format_true = self.calculate_salary.format_hour("00:01")
         format_false = self.calculate_salary.format_hour("01")
         self.assertEqual(type(format_true), datetime.time)
@@ -72,6 +71,7 @@ class TestCalculateSalary(unittest.TestCase):
 
         
 class TestValidateHour(unittest.TestCase):
+    
     validate = ValidateHour()
 
     def test_validate_number(self):
