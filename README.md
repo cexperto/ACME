@@ -3,7 +3,24 @@
 
 System to calculate salary from txt file
 
+The system is built on a microkernel architecture, 
+where a main class is the starting point and requests services, each module is built to satisfy a specific requirement.
+
+Methodology:
+
+From a general approach, it is broken down into smaller parts,
+transforming them into various requirements and ensuring
+its operation with unit tests and functional tests.
+
+
+
 ## Deployment
+
+make sure have python 3+
+
+Clone this repo
+
+Get into the folder 
 
 To deploy this project run
 
@@ -12,7 +29,7 @@ To deploy this project run
 ```
 
 To add data, modify employes.txt file or 
-change the name file in line 8 in main.py file
+change the name file in line 28 in main.py file
 
 the format data should be like below
 
